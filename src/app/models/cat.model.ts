@@ -4,13 +4,15 @@ export interface Cat {
   imageUrl: string;
   birthday: Date;
   favoriteToy: string;
-  description: string;
   breed: string;
   furColor: string;
   ownerName: string;
+  description: string;
   personalityTraits: string[];
   funFacts: string[];
+  userId: string;
   createdAt: Date;
+  updatedAt: Date;
 }
 
 export const PERSONALITY_TRAITS = [
