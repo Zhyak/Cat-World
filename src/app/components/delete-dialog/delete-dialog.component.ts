@@ -5,20 +5,10 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-delete-dialog',
+  templateUrl: './delete-dialog.component.html',
+  styleUrls: ['./delete-dialog.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatButtonModule],
-  template: `
-    <h2 mat-dialog-title>Confirmar eliminación</h2>
-    <mat-dialog-content>
-      ¿Estás seguro de que deseas eliminar a {{ data.catName }}?
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <button mat-button mat-dialog-close>Cancelar</button>
-      <button mat-raised-button color="warn" [mat-dialog-close]="true">
-        Eliminar
-      </button>
-    </mat-dialog-actions>
-  `
+  imports: [CommonModule, MatDialogModule, MatButtonModule]
 })
 export class DeleteDialogComponent {
   constructor(

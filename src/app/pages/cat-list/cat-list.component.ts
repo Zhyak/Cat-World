@@ -13,6 +13,8 @@ import { Cat } from '../../models/cat.model';
 
 @Component({
   selector: 'app-cat-list',
+  templateUrl: './cat-list.component.html',
+  styleUrls: ['./cat-list.component.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -22,81 +24,7 @@ import { Cat } from '../../models/cat.model';
     MatProgressSpinnerModule,
     RouterModule,
     CatCardComponent
-  ],
-  template: `
-    <div class="container">
-      <div class="header">
-        <h1>Nuestros Gatitos</h1>
-        <button mat-raised-button color="primary" routerLink="/cat/new">
-          <mat-icon>add</mat-icon> Agregar Gatito
-        </button>
-      </div>
-      
-      @if (catsService.isLoading() | async) {
-        <div class="loading-spinner">
-          <mat-spinner diameter="40"></mat-spinner>
-        </div>
-      } @else if ((cats$ | async)?.length === 0) {
-        <div class="no-results">
-          <mat-icon>sentiment_dissatisfied</mat-icon>
-          <p>No hay gatitos registrados</p>
-        </div>
-      }
-
-      <div class="cats-grid">
-        @for (cat of cats$ | async; track cat.id) {
-          <app-cat-card 
-            [cat]="cat"
-            (delete)="onDeleteCat($event)"
-          />
-        }
-      </div>
-    </div>
-  `,
-  styles: [`
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    
-    h1 {
-      margin: 0;
-      font-size: 2rem;
-      color: #333;
-    }
-
-    .loading-spinner {
-      display: flex;
-      justify-content: center;
-      padding: 2rem;
-    }
-
-    .no-results {
-      text-align: center;
-      padding: 3rem;
-      color: #666;
-    }
-
-    .no-results mat-icon {
-      font-size: 48px;
-      width: 48px;
-      height: 48px;
-      margin-bottom: 1rem;
-    }
-
-    .no-results p {
-      font-size: 1.1rem;
-    }
-
-    .cats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-      padding: 20px 0;
-    }
-  `]
+  ]
 })
 export class CatListComponent implements OnInit {
   cats$!: Observable<Cat[]>;

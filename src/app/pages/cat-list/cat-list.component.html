@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="header">
+    <h1>Nuestros Gatitos</h1>
+    <button mat-raised-button color="primary" routerLink="/cat/new">
+      <mat-icon>add</mat-icon> Agregar Gatito
+    </button>
+  </div>
+  
+  @if (catsService.isLoading() | async) {
+    <div class="loading-spinner">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  } @else if ((cats$ | async)?.length === 0) {
+    <div class="no-results">
+      <mat-icon>sentiment_dissatisfied</mat-icon>
+      <p>No hay gatitos registrados</p>
+    </div>
+  }
+
+  <div class="cats-grid">
+    @for (cat of cats$ | async; track cat.id) {
+      <app-cat-card 
+        [cat]="cat"
+        (delete)="onDeleteCat($event)"
+      />
+    }
+  </div>
+</div>
