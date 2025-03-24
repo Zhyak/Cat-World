@@ -15,6 +15,9 @@ export interface Cat {
   updatedAt: Date;
 }
 
+export type NewCat = Omit<Cat, 'id' | 'userId' | 'createdAt' | 'updatedAt'>;
+export type UpdateCat = Partial<NewCat>;
+
 export const PERSONALITY_TRAITS = [
   'Juguetón',
   'Tranquilo',

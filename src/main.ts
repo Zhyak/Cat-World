@@ -50,6 +50,8 @@ const routes: Routes = [
 
 @Component({
   selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -58,34 +60,7 @@ const routes: Routes = [
     MatButtonModule,
     MatIconModule,
     MatMenuModule
-  ],
-  template: `
-    <mat-toolbar color="primary">
-      <button mat-icon-button routerLink="/">
-        <mat-icon>pets</mat-icon>
-      </button>
-      <span>Catálogo de Gatitos</span>
-      <span class="spacer"></span>
-      @if (authService.isAuthenticated()) {
-        <button mat-icon-button [matMenuTriggerFor]="menu">
-          <mat-icon>account_circle</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="authService.signOut()">
-            <mat-icon>logout</mat-icon>
-            <span>Cerrar sesión</span>
-          </button>
-        </mat-menu>
-      }
-    </mat-toolbar>
-    
-    <router-outlet></router-outlet>
-  `,
-  styles: [`
-    .spacer {
-      flex: 1 1 auto;
-    }
-  `]
+  ]
 })
 export class App {
   constructor(public authService: AuthService) {}

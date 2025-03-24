@@ -1,0 +1,183 @@
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+form {
+  margin-top: var(--spacing-lg);
+}
+
+.image-upload {
+  margin-bottom: var(--spacing-lg);
+  position: relative;
+}
+
+ngx-dropzone {
+  height: 200px;
+  border-radius: var(--card-border-radius);
+  border: 2px dashed #ccc;
+  background: #fafafa;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+
+  &:hover:not([disabled]) {
+    border-color: #666;
+    background: #f5f5f5;
+  }
+
+  &[disabled] {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.existing-image {
+  max-height: 180px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.upload-prompt {
+  text-align: center;
+  color: #666;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  small {
+    display: block;
+    margin-top: var(--spacing-sm);
+    color: #999;
+  }
+}
+
+.upload-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  border-radius: var(--card-border-radius);
+}
+
+.form-row {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+.form-field-full {
+  width: 100%;
+}
+
+.personality-section {
+  margin: var(--spacing-lg) 0;
+}
+
+.personality-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.fun-facts {
+  margin: var(--spacing-lg) 0;
+}
+
+.fun-fact-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin: var(--spacing-lg) 0;
+}
+
+.button-spinner {
+  margin-right: var(--spacing-sm);
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: var(--spacing-sm);
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .personality-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+  }
+
+  .fun-fact-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+
+    button {
+      align-self: flex-end;
+    }
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-md) 0;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  ngx-dropzone {
+    height: 160px;
+  }
+
+  .upload-prompt {
+    mat-icon {
+      font-size: 36px;
+      width: 36px;
+      height: 36px;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
+
+    small {
+      font-size: 0.8rem;
+    }
+  }
+}

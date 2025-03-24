@@ -1,10 +1,10 @@
 @if (cat$ | async; as cat) {
   <div class="container">
     <mat-card>
-      <img mat-card-image [src]="cat.imageUrl" [alt]="cat.name">
+      <img mat-card-image [src]="getSafeImageUrl(cat.imageUrl)" [alt]="sanitizer.escapeHtml(cat.name)">
       <mat-card-content>
-        <h1>{{ cat.name }}</h1>
-        <p class="description">{{ cat.description }}</p>
+        <h1>{{ sanitizer.escapeHtml(cat.name) }}</h1>
+        <p class="description">{{ sanitizer.escapeHtml(cat.description) }}</p>
         
         <div class="info-grid">
           <div class="info-item">
@@ -14,36 +14,36 @@
           
           <div class="info-item">
             <h3>Raza</h3>
-            <p>{{ cat.breed }}</p>
+            <p>{{ sanitizer.escapeHtml(cat.breed) }}</p>
           </div>
           
           <div class="info-item">
             <h3>Color</h3>
-            <p>{{ cat.furColor }}</p>
+            <p>{{ sanitizer.escapeHtml(cat.furColor) }}</p>
           </div>
           
           <div class="info-item">
             <h3>Juguete Favorito</h3>
-            <p>{{ cat.favoriteToy }}</p>
+            <p>{{ sanitizer.escapeHtml(cat.favoriteToy) }}</p>
           </div>
           
           <div class="info-item">
             <h3>Dueño</h3>
-            <p>{{ cat.ownerName }}</p>
+            <p>{{ sanitizer.escapeHtml(cat.ownerName) }}</p>
           </div>
         </div>
 
         <h3>Personalidad</h3>
         <mat-chip-set>
           @for (trait of cat.personalityTraits; track trait) {
-            <mat-chip>{{ trait }}</mat-chip>
+            <mat-chip>{{ sanitizer.escapeHtml(trait) }}</mat-chip>
           }
         </mat-chip-set>
 
         <h3>Curiosidades</h3>
         <ul>
           @for (fact of cat.funFacts; track fact) {
-            <li>{{ fact }}</li>
+            <li>{{ sanitizer.escapeHtml(fact) }}</li>
           }
         </ul>
       </mat-card-content>

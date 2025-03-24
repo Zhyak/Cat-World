@@ -6,7 +6,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { CatsService } from '../../../../core/services/cats.service';
+import { SanitizationService } from '../../../../core/services/sanitization.service';
 import { switchMap } from 'rxjs/operators';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-cat-detail',
@@ -22,8 +24,13 @@ export class CatDetailComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private catsService: CatsService
+    private catsService: CatsService,
+    public sanitizer: SanitizationService
   ) {}
+
+  getSafeImageUrl(url: string): SafeUrl {
+    return this.sanitizer.sanitizeUrl(url);
+  }
 
   calculateAge(birthday: Date): string {
     const today = new Date();

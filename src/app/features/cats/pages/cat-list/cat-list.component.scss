@@ -2,7 +2,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  padding: 0 var(--spacing-sm);
 }
 
 h1 {
@@ -14,19 +17,19 @@ h1 {
 .loading-spinner {
   display: flex;
   justify-content: center;
-  padding: 2rem;
+  padding: var(--spacing-xl);
 }
 
 .no-results {
   text-align: center;
-  padding: 3rem;
+  padding: var(--spacing-xl) var(--spacing-sm);
   color: #666;
 
   mat-icon {
     font-size: 48px;
     width: 48px;
     height: 48px;
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-md);
   }
 
   p {
@@ -36,19 +39,51 @@ h1 {
 
 .cats-grid {
   display: grid;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg) var(--spacing-sm);
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  padding: 20px 0;
+}
+
+@media (min-width: 1200px) {
+  .cats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1199px) and (min-width: 601px) {
+  .cats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 900px;
+  }
 }
 
 @media (max-width: 600px) {
+  .container {
+    padding: var(--spacing-xs);
+  }
+
   .header {
     flex-direction: column;
-    gap: 16px;
+    align-items: stretch;
     text-align: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+  }
+
+  h1 {
+    font-size: 1.5rem;
   }
 
   .cats-grid {
     grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm);
+  }
+
+  button[mat-raised-button] {
+    width: 100%;
   }
 }
