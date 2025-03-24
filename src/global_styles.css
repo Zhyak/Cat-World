@@ -1,5 +1,6 @@
 /* Material Theme */
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
 /* Base Styles */
 * {
@@ -35,7 +36,7 @@ html {
 }
 
 body {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: 'Poppins', sans-serif;
   background-color: #f8f9fa;
   line-height: 1.6;
   color: rgba(0, 0, 0, 0.87);

@@ -1,62 +1,75 @@
-<div class="container">
-  <mat-card class="auth-card">
-    <mat-card-header>
-      <mat-card-title>Registrarse</mat-card-title>
-    </mat-card-header>
+<div class="auth-card">
+  <mat-card>
+    <div class="auth-header">
+      <mat-icon class="logo-icon">pets</mat-icon>
+      <h1>¡Unite a Cat World!</h1>
+      <p>Creá una cuenta para comenzar tu viaje michifeliz 🐈</p>
+    </div>
 
-    <mat-card-content>
-      <form #registerForm="ngForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline">
-          <mat-label>Correo electrónico</mat-label>
-          <input
-            matInput
-            type="email"
-            name="email"
-            [(ngModel)]="email"
-            required
-            email
-            #emailInput="ngModel"
+    <form #registerForm="ngForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Correo electrónico</mat-label>
+        <mat-icon matPrefix>email</mat-icon>
+        <input
+          matInput
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          required
+          email
+          #emailInput="ngModel"
+          placeholder="tu.correo@ejemplo.com"
+        >
+        @if (emailInput.invalid && emailInput.touched) {
+          <mat-error>Por favor ingresa un correo electrónico válido</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <mat-icon matPrefix>lock</mat-icon>
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          name="password"
+          [(ngModel)]="password"
+          required
+          minlength="6"
+          #passwordInput="ngModel"
+          placeholder="Elige una contraseña"
+        >
+        <button
+          type="button"
+          mat-icon-button
+          matSuffix
+          (click)="hidePassword = !hidePassword"
+        >
+          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        @if (passwordInput.invalid && passwordInput.touched) {
+          <mat-error>La contraseña debe tener al menos 6 caracteres</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="auth-actions">
+        @if (loading) {
+          <mat-spinner diameter="36"></mat-spinner>
+        } @else {
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="registerForm.invalid"
           >
-          @if (emailInput.invalid && emailInput.touched) {
-            <mat-error>Por favor, ingresa un correo electrónico válido</mat-error>
-          }
-        </mat-form-field>
+            <mat-icon>person_add</mat-icon>
+            Registrarse
+          </button>
+        }
+      </div>
+    </form>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Contraseña</mat-label>
-          <input
-            matInput
-            type="password"
-            name="password"
-            [(ngModel)]="password"
-            required
-            minlength="6"
-            #passwordInput="ngModel"
-          >
-          @if (passwordInput.invalid && passwordInput.touched) {
-            <mat-error>La contraseña debe tener al menos 6 caracteres</mat-error>
-          }
-        </mat-form-field>
-
-        <div class="actions">
-          @if (loading) {
-            <mat-spinner diameter="36"></mat-spinner>
-          } @else {
-            <button
-              mat-raised-button
-              color="primary"
-              type="submit"
-              [disabled]="registerForm.invalid"
-            >
-              Registrarse
-            </button>
-          }
-        </div>
-      </form>
-    </mat-card-content>
-
-    <mat-card-footer>
-      <p>¿Ya tienes una cuenta? <a routerLink="/login">Inicia sesión aquí</a></p>
-    </mat-card-footer>
+    <div class="auth-footer">
+      <p>¿Ya tenés una cuenta? <a routerLink="/login">Iniciá sesión acá</a></p>
+    </div>
   </mat-card>
 </div>
