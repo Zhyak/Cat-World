@@ -11,7 +11,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router, RouterModule, RouteReuseStrategy } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { CatsService } from '../../../../core/services/cats.service';
 import { PERSONALITY_TRAITS, NewCat, UpdateCat } from '../../../../core/models/cat.model';
@@ -54,11 +54,8 @@ export class CatFormComponent implements OnInit, OnDestroy {
     private catsService: CatsService,
     private router: Router,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar,
-    private routeReuseStrategy: RouteReuseStrategy
+    private snackBar: MatSnackBar
   ) {
-    (this.routeReuseStrategy as any).shouldReuseRoute = () => false;
-
     this.catForm = this.fb.group({
       name: ['', Validators.required],
       birthday: [null, Validators.required],
@@ -73,11 +70,6 @@ export class CatFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.isSubmitting = false;
-    this.uploadingImage = false;
-    this.selectedImage = null;
-    this.existingImageUrl = undefined;
-
     this.route.params.pipe(
       takeUntil(this.destroy$)
     ).subscribe(params => {
@@ -92,9 +84,6 @@ export class CatFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.isSubmitting = false;
-    this.uploadingImage = false;
-    
     this.destroy$.next();
     this.destroy$.complete();
   }
@@ -153,17 +142,31 @@ export class CatFormComponent implements OnInit, OnDestroy {
     return traits.includes(trait);
   }
 
-  onTraitToggle(event: { checked: boolean }, trait: string) {
+  onTraitToggle(event: any, trait: string) {
     const traits = [...(this.catForm.get('personalityTraits')?.value || [])];
-    if (event.checked) {
-      traits.push(trait);
+    const index = traits.indexOf(trait);
+    
+    if (index > -1) {
+      traits.splice(index, 1);
     } else {
-      const index = traits.indexOf(trait);
-      if (index > -1) {
-        traits.splice(index, 1);
-      }
+      traits.push(trait);
     }
+    
     this.catForm.patchValue({ personalityTraits: traits });
+  }
+
+  getTraitIcon(trait: string): string {
+    const icons: { [key: string]: string } = {
+      'Juguetón': '😺',
+      'Tranquilo': '😌',
+      'Cariñoso': '😻',
+      'Independiente': '🐱',
+      'Curioso': '🧐',
+      'Tímido': '🙀',
+      'Sociable': '😸',
+      'Energético': '⚡️'
+    };
+    return icons[trait] || '🐾';
   }
 
   onImageSelected(event: { addedFiles: File[] }) {

@@ -1,14 +1,15 @@
-<div class="container">
+<div class="cat-form-container">
   <h1>{{ isEditMode ? 'Editar Gatito' : 'Agregar Nuevo Gatito' }}</h1>
   
   <form [formGroup]="catForm" (ngSubmit)="onSubmit()">
-    <div class="image-upload">
+    <div class="image-upload-section">
       <ngx-dropzone
         [accept]="'image/jpeg,image/jpg,image/png,image/webp'"
         [maxFileSize]="5242880"
         (change)="onImageSelected($event)"
         [multiple]="false"
         [disabled]="uploadingImage"
+        class="dropzone"
       >
         @if (!selectedImage && !existingImageUrl) {
           <ngx-dropzone-label>
@@ -19,11 +20,11 @@
             </div>
           </ngx-dropzone-label>
         } @else if (selectedImage) {
-          <ngx-dropzone-image-preview [file]="selectedImage">
+          <ngx-dropzone-image-preview [file]="selectedImage" class="preview-image">
             <ngx-dropzone-label>{{ selectedImage.name }}</ngx-dropzone-label>
           </ngx-dropzone-image-preview>
         } @else if (existingImageUrl) {
-          <img [src]="existingImageUrl" alt="Imagen actual" class="existing-image">
+          <img [src]="existingImageUrl" alt="Imagen actual" class="preview-image">
         }
       </ngx-dropzone>
       @if (uploadingImage) {
@@ -34,99 +35,153 @@
       }
     </div>
 
-    <div class="form-row">
-      <mat-form-field class="form-field-full">
+    <div class="form-grid">
+      <mat-form-field appearance="outline">
         <mat-label>Nombre</mat-label>
+        <mat-icon matPrefix>pets</mat-icon>
         <input matInput formControlName="name" required>
         <mat-error *ngIf="catForm.get('name')?.errors?.['required']">
           El nombre es requerido
         </mat-error>
       </mat-form-field>
-      
-      <mat-form-field class="form-field-full">
+
+      <mat-form-field appearance="outline">
         <mat-label>Fecha de nacimiento</mat-label>
+        <mat-icon matPrefix>calendar_today</mat-icon>
         <input matInput [matDatepicker]="picker" formControlName="birthday" required>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="catForm.get('birthday')?.errors?.['required']">
+          La fecha de nacimiento es requerida
+        </mat-error>
       </mat-form-field>
-    </div>
 
-    <div class="form-row">
-      <mat-form-field class="form-field-full">
+      <mat-form-field appearance="outline">
         <mat-label>Juguete favorito</mat-label>
+        <mat-icon matPrefix>toys</mat-icon>
         <input matInput formControlName="favoriteToy" required>
+        <mat-error *ngIf="catForm.get('favoriteToy')?.errors?.['required']">
+          El juguete favorito es requerido
+        </mat-error>
       </mat-form-field>
-      
-      <mat-form-field class="form-field-full">
+
+      <mat-form-field appearance="outline">
         <mat-label>Dueño</mat-label>
+        <mat-icon matPrefix>person</mat-icon>
         <input matInput formControlName="ownerName" required>
+        <mat-error *ngIf="catForm.get('ownerName')?.errors?.['required']">
+          El nombre del dueño es requerido
+        </mat-error>
       </mat-form-field>
-    </div>
 
-    <div class="form-row">
-      <mat-form-field class="form-field-full">
+      <mat-form-field appearance="outline">
         <mat-label>Raza</mat-label>
+        <mat-icon matPrefix>category</mat-icon>
         <input matInput formControlName="breed" required>
+        <mat-error *ngIf="catForm.get('breed')?.errors?.['required']">
+          La raza es requerida
+        </mat-error>
       </mat-form-field>
-      
-      <mat-form-field class="form-field-full">
+
+      <mat-form-field appearance="outline">
         <mat-label>Color del pelaje</mat-label>
+        <mat-icon matPrefix>palette</mat-icon>
         <input matInput formControlName="furColor" required>
+        <mat-error *ngIf="catForm.get('furColor')?.errors?.['required']">
+          El color del pelaje es requerido
+        </mat-error>
       </mat-form-field>
     </div>
 
-    <mat-form-field class="form-field-full">
+    <mat-form-field appearance="outline" class="full-width">
       <mat-label>Descripción</mat-label>
+      <mat-icon matPrefix>description</mat-icon>
       <textarea matInput formControlName="description" rows="3" required></textarea>
+      <mat-error *ngIf="catForm.get('description')?.errors?.['required']">
+        La descripción es requerida
+      </mat-error>
     </mat-form-field>
 
     <div class="personality-section">
       <h3>Personalidad</h3>
-      <div class="personality-grid">
+      <div class="personality-chips">
         @for (trait of personalityTraits; track trait) {
-          <mat-checkbox [checked]="isTraitSelected(trait)" (change)="onTraitToggle($event, trait)">
-            {{ trait }}
-          </mat-checkbox>
-        }
-      </div>
-    </div>
-
-    <div class="fun-facts">
-      <h3>Curiosidades</h3>
-      <div formArrayName="funFacts">
-        @for (fact of funFacts.controls; track fact; let i = $index) {
-          <div class="fun-fact-item">
-            <mat-form-field class="form-field-full">
-              <mat-label>Curiosidad {{ i + 1 }}</mat-label>
-              <input matInput [formControlName]="i">
-            </mat-form-field>
-            <button type="button" mat-icon-button color="warn" (click)="removeFunFact(i)">
-              <mat-icon>delete</mat-icon>
-            </button>
+          <div 
+            class="personality-chip" 
+            [class.selected]="isTraitSelected(trait)"
+            (click)="onTraitToggle($event, trait)"
+          >
+            <span class="chip-icon">{{ getTraitIcon(trait) }}</span>
+            <span class="chip-text">{{ trait }}</span>
           </div>
         }
       </div>
-      <button type="button" mat-stroked-button (click)="addFunFact()">
-        <mat-icon>add</mat-icon> Agregar curiosidad
+    </div>
+
+    <div class="fun-facts-section">
+      <h3>Curiosidades</h3>
+      <div formArrayName="funFacts" class="fun-facts-list">
+        @for (fact of funFacts.controls; track fact; let i = $index) {
+          <div class="fun-fact-item" [style.animation-delay]="i * 100 + 'ms'">
+            <mat-form-field appearance="outline">
+              <mat-label>Curiosidad {{ i + 1 }}</mat-label>
+              <mat-icon matPrefix>emoji_nature</mat-icon>
+              <input matInput [formControlName]="i">
+              <button 
+                type="button" 
+                mat-icon-button 
+                color="warn" 
+                matSuffix
+                (click)="removeFunFact(i)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        }
+      </div>
+      <button 
+        type="button" 
+        mat-stroked-button 
+        (click)="addFunFact()" 
+        class="add-fact-button"
+      >
+        <mat-icon>add</mat-icon>
+        <span>Agregar curiosidad</span>
       </button>
     </div>
 
-    <div class="actions">
+    <div class="form-actions">
       <button 
         mat-raised-button 
         color="primary" 
         type="submit" 
         [disabled]="!catForm.valid || isSubmitting || uploadingImage"
+        class="submit-button"
       >
         @if (isSubmitting) {
-          <mat-spinner diameter="24" class="button-spinner"></mat-spinner>
-          <span>{{ isEditMode ? 'Guardando...' : 'Creando...' }}</span>
+          <ng-container>
+            <mat-spinner diameter="24" class="button-spinner"></mat-spinner>
+            <span>{{ isEditMode ? 'Guardando...' : 'Creando...' }}</span>
+          </ng-container>
         } @else {
-          <span>{{ isEditMode ? 'Guardar Cambios' : 'Guardar Gatito' }}</span>
+          <ng-container>
+            <mat-icon>save</mat-icon>
+            <span>{{ isEditMode ? 'Guardar Cambios' : 'Guardar Gatito' }}</span>
+          </ng-container>
         }
       </button>
-      <button mat-button type="button" routerLink="/" [disabled]="isSubmitting">
-        Cancelar
+      <button 
+        mat-button 
+        type="button" 
+        routerLink="/" 
+        [disabled]="isSubmitting"
+        class="cancel-button"
+      >
+        <ng-container>
+          <mat-icon>close</mat-icon>
+          <span>Cancelar</span>
+        </ng-container>
       </button>
     </div>
   </form>

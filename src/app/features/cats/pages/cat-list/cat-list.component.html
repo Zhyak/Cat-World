@@ -1,28 +1,37 @@
-<div class="container">
+<div class="home-container">
   <div class="header">
-    <h1>Nuestros Gatitos</h1>
-    <button mat-raised-button color="primary" routerLink="/cat/new">
-      <mat-icon>add</mat-icon> Agregar Gatito
+    <h1>
+      <mat-icon>pets</mat-icon>
+      Nuestros Gatitos
+    </h1>
+    <button mat-raised-button color="primary" routerLink="/cat/new" class="add-cat-button">
+      <mat-icon>add</mat-icon>
+      Agregar Gatito
     </button>
   </div>
   
   @if (catsService.isLoading() | async) {
-    <div class="loading-spinner">
+    <div class="loading-container">
       <mat-spinner diameter="40"></mat-spinner>
     </div>
   } @else if ((cats$ | async)?.length === 0) {
-    <div class="no-results">
+    <div class="empty-state">
       <mat-icon>sentiment_dissatisfied</mat-icon>
       <p>No hay gatitos registrados</p>
+      <button mat-raised-button color="primary" routerLink="/cat/new">
+        <mat-icon>add</mat-icon>
+        Agregar mi primer gatito
+      </button>
+    </div>
+  } @else {
+    <div class="cards-grid">
+      @for (cat of cats$ | async; track cat.id) {
+        <app-cat-card 
+          [cat]="cat"
+          (delete)="onDeleteCat($event)"
+          class="card-item"
+        />
+      }
     </div>
   }
-
-  <div class="cats-grid">
-    @for (cat of cats$ | async; track cat.id) {
-      <app-cat-card 
-        [cat]="cat"
-        (delete)="onDeleteCat($event)"
-      />
-    }
-  </div>
 </div>

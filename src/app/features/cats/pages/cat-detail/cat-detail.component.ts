@@ -15,7 +15,14 @@ import { SafeUrl } from '@angular/platform-browser';
   templateUrl: './cat-detail.component.html',
   styleUrls: ['./cat-detail.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatChipsModule, RouterModule]
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatChipsModule,
+    RouterModule
+  ]
 })
 export class CatDetailComponent {
   cat$ = this.route.paramMap.pipe(
@@ -30,6 +37,11 @@ export class CatDetailComponent {
 
   getSafeImageUrl(url: string): SafeUrl {
     return this.sanitizer.sanitizeUrl(url);
+  }
+
+  onImageError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'https://placekitten.com/600/400';
   }
 
   calculateAge(birthday: Date): string {
