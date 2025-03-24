@@ -8,8 +8,8 @@ import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CatCardComponent } from '../../components/cat-card/cat-card.component';
 import { DeleteDialogComponent } from '../../components/delete-dialog/delete-dialog.component';
-import { CatsService } from '../../services/cats.service';
-import { Cat } from '../../models/cat.model';
+import { CatsService } from '../../../../core/services/cats.service';
+import { Cat } from '../../../../core/models/cat.model';
 
 @Component({
   selector: 'app-cat-list',

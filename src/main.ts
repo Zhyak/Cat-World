@@ -8,42 +8,42 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AuthService } from './app/services/auth.service';
-import { AuthGuard } from './app/guards/auth.guard';
+import { AuthService } from './app/core/services/auth.service';
+import { AuthGuard } from './app/core/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuard],
-    loadComponent: () => import('./app/pages/cat-list/cat-list.component')
+    loadComponent: () => import('./app/features/cats/pages/cat-list/cat-list.component')
       .then(m => m.CatListComponent)
   },
   {
     path: 'login',
-    loadComponent: () => import('./app/pages/login/login.component')
+    loadComponent: () => import('./app/features/auth/pages/login/login.component')
       .then(m => m.LoginComponent)
   },
   {
     path: 'register',
-    loadComponent: () => import('./app/pages/register/register.component')
+    loadComponent: () => import('./app/features/auth/pages/register/register.component')
       .then(m => m.RegisterComponent)
   },
   {
     path: 'cat/new',
     canActivate: [AuthGuard],
-    loadComponent: () => import('./app/pages/cat-form/cat-form.component')
+    loadComponent: () => import('./app/features/cats/pages/cat-form/cat-form.component')
       .then(m => m.CatFormComponent)
   },
   {
     path: 'cat/edit/:id',
     canActivate: [AuthGuard],
-    loadComponent: () => import('./app/pages/cat-form/cat-form.component')
+    loadComponent: () => import('./app/features/cats/pages/cat-form/cat-form.component')
       .then(m => m.CatFormComponent)
   },
   {
     path: 'cat/:id',
     canActivate: [AuthGuard],
-    loadComponent: () => import('./app/pages/cat-detail/cat-detail.component')
+    loadComponent: () => import('./app/features/cats/pages/cat-detail/cat-detail.component')
       .then(m => m.CatDetailComponent)
   }
 ];

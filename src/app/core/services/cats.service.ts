@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { supabase } from '../supabase/supabase.client';
+import { supabase } from '../../supabase/supabase.client';
 import { Cat } from '../models/cat.model';
 import { AuthService } from './auth.service';
 

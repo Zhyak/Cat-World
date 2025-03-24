@@ -13,8 +13,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, RouterModule, RouteReuseStrategy } from '@angular/router';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-import { CatsService } from '../../services/cats.service';
-import { PERSONALITY_TRAITS } from '../../models/cat.model';
+import { CatsService } from '../../../../core/services/cats.service';
+import { PERSONALITY_TRAITS } from '../../../../core/models/cat.model';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({

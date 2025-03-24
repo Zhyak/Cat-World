@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { Cat } from '../../models/cat.model';
+import { Cat } from '../../../../core/models/cat.model';
 
 @Component({
   selector: 'app-cat-card',

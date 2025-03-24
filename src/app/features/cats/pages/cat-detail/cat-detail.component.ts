@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
-import { CatsService } from '../../services/cats.service';
+import { CatsService } from '../../../../core/services/cats.service';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
