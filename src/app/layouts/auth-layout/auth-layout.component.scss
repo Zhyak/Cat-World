@@ -1,0 +1,26 @@
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.auth-card {
+  background: white;
+  padding: var(--spacing-lg, 2rem);
+  border-radius: var(--border-radius-md, 8px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px; /* Adjust max-width as needed */
+}
+
+@media (max-width: 600px) {
+  .auth-container {
+    padding: var(--spacing-sm);
+  }
+  .auth-card {
+    padding: var(--spacing-md, 1.5rem);
+  }
+}

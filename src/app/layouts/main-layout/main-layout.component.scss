@@ -1,0 +1,28 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 0 var(--spacing-sm);
+  min-height: 56px !important;
+  
+  span {
+    margin-left: var(--spacing-sm);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 600px) {
+  mat-toolbar {
+    padding: 0 var(--spacing-xs);
+    
+    span {
+      font-size: 1.1rem;
+    }
+  }
+}
