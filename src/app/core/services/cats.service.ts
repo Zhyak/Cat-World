@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { supabase } from '../../supabase/supabase.client';
 import { Cat } from '../models/cat.model';
@@ -9,15 +9,22 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CatsService {
+export class CatsService implements OnDestroy {
   private cats = new BehaviorSubject<Cat[]>([]);
   private loading = new BehaviorSubject<boolean>(false);
+  private destroy$ = new Subject<void>();
 
   constructor(
     private snackBar: MatSnackBar,
     private authService: AuthService
   ) {
-    this.loadCats();
+    this.authService.user$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(user => {
+        if (user) {
+          this.loadCats();
+        }
+      });
   }
 
   getCats(): Observable<Cat[]> {
@@ -205,6 +212,11 @@ export class CatsService {
     return this.cats.asObservable().pipe(
       map((cats: Cat[]) => cats.find((cat: Cat) => cat.id === id))
     );
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private showSuccess(message: string): void {
