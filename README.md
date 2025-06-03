@@ -28,3 +28,6 @@ git clone https://github.com/Zhyak/Cat-World.git
 cd Cat-World
 npm install
 npm run start
+```
+
+Open <http://localhost:4200/> in your browser to view the app.
